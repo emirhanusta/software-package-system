@@ -1,6 +1,6 @@
 package com.repsy.repositoryapi.controller;
 
-import com.repsy.repositoryapi.service.PackageService;
+import com.repsy.repositoryapi.service.MetaFileService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
-public class PackageController {
+public class MetaFileController {
 
-    private final PackageService packageService;
+    private final MetaFileService metaFileService;
 
-    public PackageController(PackageService packageService) {
-        this.packageService = packageService;
+    public MetaFileController(MetaFileService metaFileService) {
+        this.metaFileService = metaFileService;
     }
 
     @PostMapping("/{packageName}/{version}")
@@ -24,17 +24,17 @@ public class PackageController {
             @RequestPart("meta") MultipartFile metaFile,
             @RequestPart("package") MultipartFile packageFile
     ) throws Exception {
-        packageService.upload(packageName, version, metaFile, packageFile);
+        metaFileService.upload(packageName, version, metaFile, packageFile);
         return ResponseEntity.ok("Package uploaded successfully");
     }
 
-    @GetMapping("/{packageName}/{version}/{fileName:.+}")
+    @GetMapping("/{packageName}/{version}/{fileName}")
     public ResponseEntity<Resource> download(
             @PathVariable String packageName,
             @PathVariable String version,
             @PathVariable String fileName) {
 
-        Resource file = packageService.download(packageName, version, fileName);
+        Resource file = metaFileService.download(packageName, version, fileName);
 
         String contentType = fileName.endsWith(".json")
                 ? "application/json"
@@ -42,7 +42,7 @@ public class PackageController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, contentType)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .body(file);
     }
 

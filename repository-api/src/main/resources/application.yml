@@ -12,7 +12,7 @@ spring:
     password: postgres
 
 storage:
-    strategy: object-storage
+    strategy: file-system
     fs:
         base-path: uploads
     obj:

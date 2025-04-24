@@ -1,6 +1,9 @@
 package com.repsy.repositoryapi.exception;
 
+import com.repsy.repositoryapi.exception.custom.InvalidExtensionException;
+import com.repsy.repositoryapi.exception.custom.PackageAlreadyExistsException;
 import com.repsy.storagecore.exception.DirectoryCreationException;
+import com.repsy.storagecore.exception.FileStorageException;
 import com.repsy.storagecore.exception.MetaDataMismatchException;
 import com.repsy.storagecore.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -70,5 +73,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(
                 ex.getMessage(), HttpStatus.BAD_REQUEST, System.currentTimeMillis(), req.getRequestURI()),
                 HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidExtensionException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidExtensionException(com.repsy.repositoryapi.exception.custom.InvalidExtensionException ex, HttpServletRequest req) {
+        return new ResponseEntity<>(new ErrorResponse(
+                ex.getMessage(), HttpStatus.BAD_REQUEST, System.currentTimeMillis(), req.getRequestURI()),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PackageAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handlePackageAlreadyExistsException(com.repsy.repositoryapi.exception.custom.PackageAlreadyExistsException ex, HttpServletRequest req) {
+        return new ResponseEntity<>(new ErrorResponse(
+                ex.getMessage(), HttpStatus.CONFLICT, System.currentTimeMillis(), req.getRequestURI()),
+                HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<ErrorResponse> handleFileStorageException(FileStorageException ex, HttpServletRequest req) {
+        return new ResponseEntity<>(new ErrorResponse(
+                ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, System.currentTimeMillis(), req.getRequestURI()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
