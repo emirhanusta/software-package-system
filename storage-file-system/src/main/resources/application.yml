@@ -1,1 +1,3 @@
-spring.application.name=storage-file-system
+spring:
+  application:
+    name: storage-file-system
