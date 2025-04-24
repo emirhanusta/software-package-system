@@ -1,0 +1,4 @@
+storage:
+  strategy: file-strategy
+  fs:
+    base-path: /tmp/test-repsy
