@@ -1,9 +1,0 @@
-{
-  "name": "testpackage",
-  "version": "1.0.0",
-  "author": "Emirhan",
-  "dependencies": [
-    { "packageName": "dep1", "version": "1.0.0" },
-    { "packageName": "dep2", "version": "2.0.0" }
-  ]
-}
