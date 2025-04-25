@@ -1,22 +1,50 @@
-version: "3.8"
+version: '3.8'
+
 services:
+  db:
+    image: postgres:15
+    container_name: repsy-postgres
+    environment:
+      POSTGRES_DB: package_systemDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   minio:
     image: minio/minio
     container_name: repsy-minio
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: server /data --console-address ":9001"
     ports:
       - "9000:9000"
       - "9001:9001"
     volumes:
       - minio_data:/data
+
+  app:
+    image: repo.repsy.io/emirhanusta/docker-repsy/repsy-app:v1.0.0
+    container_name: repsy-app
+    depends_on:
+      - db
+      - minio
+    ports:
+      - "8080:8080"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
-    command: server /data --console-address ":9001"
-    networks:
-      - repsy-net
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/package_systemDB
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      STORAGE_STRATEGY: file-system
+      STORAGE_FS_BASE_PATH: uploads
+      STORAGE_OBJ_ENDPOINT: http://minio:9000
+      STORAGE_OBJ_ACCESS_KEY: minioadmin
+      STORAGE_OBJ_SECRET_KEY: minioadmin
+      STORAGE_OBJ_BUCKET: repsy-packages
 
 volumes:
+  postgres_data:
   minio_data:
-
-networks:
-  repsy-net:
