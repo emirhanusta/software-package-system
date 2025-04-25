@@ -12,6 +12,7 @@
 
 	<artifactId>storage-file-system</artifactId>
 	<packaging>jar</packaging>
+	<name>File System Storage</name>
 
 	<dependencies>
 		<!-- storage-core -->
@@ -40,4 +41,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>repsy</id>
+			<url>https://repo.repsy.io/mvn/emirhanusta/file-system/</url>
+		</repository>
+	</distributionManagement>
+
 </project>

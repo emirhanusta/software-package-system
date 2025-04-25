@@ -12,6 +12,7 @@
 
 	<artifactId>storage-object</artifactId>
 	<packaging>jar</packaging>
+	<name>Object Storage</name>
 
 	<dependencies>
 		<dependency>
@@ -47,4 +48,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>repsy</id>
+			<url>https://repo.repsy.io/mvn/emirhanusta/object-storage/</url>
+		</repository>
+	</distributionManagement>
+
 </project>

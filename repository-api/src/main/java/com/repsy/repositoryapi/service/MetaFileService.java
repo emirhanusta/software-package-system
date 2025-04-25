@@ -67,7 +67,7 @@ public class MetaFileService {
     private void validateFileName(String fileName) {
         if (!fileName.equalsIgnoreCase("package.rep") &&
                 !fileName.equalsIgnoreCase("meta.json")) {
-            throw new InvalidExtensionException("Invalid file extension. Allowed: package.rep, meta.json");
+            throw new InvalidExtensionException("Invalid file name. Allowed: package.rep, meta.json");
         }
     }
 
