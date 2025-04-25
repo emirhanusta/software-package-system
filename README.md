@@ -96,9 +96,9 @@ Content-Type: multipart/form-data
 #### Example Request
 
 ```
-curl -X POST http://localhost:8080/my-lib/1.0.0 \
+curl -X POST http://localhost:8080/api/my-lib/1.0.0 \
   -F "meta=@meta.json" \
-  -F "file=@package.rep"
+  -F "package=@package.rep"
 ```
 
 ### 2. Download a file
@@ -110,7 +110,7 @@ GET /{packageName}/{version}/{fileName}
 #### Example Request
 
 ```
-curl -X GET http://localhost:8080/my-lib/1.0.0/package.rep
+curl -X GET http://localhost:8080/api/my-lib/1.0.0/package.rep
 ```
 
 ### Custom Storage Libraries
